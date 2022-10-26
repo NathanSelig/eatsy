@@ -6,7 +6,7 @@ const Hero = () => {
     return (
 
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-            <Image src='./public/logo_hero.png' alt='logo' />
+            <Image marginLeft={'1.5'} marginBottom={'-5'} src='/logo_hero.png' alt='logo' />
         </Flex>
     )
 }

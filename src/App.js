@@ -9,7 +9,6 @@ import axios from 'axios'
 
 
 function App() {
-  //TODO make call to tasty api store data
   const options = {
     method: 'GET',
     url: 'https://tasty.p.rapidapi.com/recipes/list',
@@ -19,12 +18,13 @@ function App() {
       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
     }
   }
-  let recipes = []
-
+  var recipes = []
+  //gets api
   useEffect(() => {
     axios.request(options).then(function (response) {
       recipes = response.data.results
       console.log(recipes)
+
     }).catch(function (error) {
       console.error(error)
     })
@@ -33,15 +33,15 @@ function App() {
   const [search, setSearch] = useState('')
   const [filteredRecipes, setFilteredRecipes] = useState([])
 
-  const handleChange = (event) => {
-    setSearch(event.target.value)
-    if (search) {
-      const regex = new RegExp(search, 'i')
-      const filtered = () => recipes.filter(recipe => recipe.name.match(regex))
-      setFilteredRecipes(filtered)
-      console.log(filteredRecipes)
-    }
-  }
+  const handleChange = (event) => setSearch(event.target.value)
+
+  useEffect(() => {
+    console.log('changed')
+
+  }, [search])
+  recipes.forEach(recipe => console.log('hello'))
+
+
   return (
     <div>
       <Nav />
@@ -49,6 +49,11 @@ function App() {
       <Container centerContent >
         <Input focusBorderColor='teal' bg={'white'} placeholder='what are you craving?' size={'md'} value={search} onChange={handleChange} />
         <p>{search}</p>
+        <ul>
+          {filteredRecipes.map(recipe =>
+            <li>{recipe.name}</li>
+          )}
+        </ul>
       </Container>
 
       <SmallWithNavigation />
