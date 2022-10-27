@@ -1,10 +1,11 @@
 import React from 'react'
-import { Box, Container, Input } from '@chakra-ui/react'
+import { Box, Container, Flex, Input, Stack } from '@chakra-ui/react'
 import SmallWithNavigation from './component/footer'
 import Nav from './component/header'
 import Hero from './component/hero'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import RecipeCard from './component/recipeCard'
 
 
 
@@ -18,13 +19,13 @@ function App() {
       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
     }
   }
-  var recipes = []
+
+  const [recipes, setRecipes] = useState([])
   //gets api
   useEffect(() => {
     axios.request(options).then(function (response) {
-      recipes = response.data.results
-      console.log(recipes)
-
+      setRecipes(response.data.results)
+      console.log('got responses')
     }).catch(function (error) {
       console.error(error)
     })
@@ -35,11 +36,16 @@ function App() {
 
   const handleChange = (event) => setSearch(event.target.value)
 
+  //runs when search is changed
   useEffect(() => {
-    console.log('changed')
+    console.log('changed to ', search)
+    const regex = RegExp(search, 'i')
+    const filtered = () => recipes.filter(recipe => recipe.name.match(regex))
+    setFilteredRecipes(filtered)
+    console.log(filteredRecipes)
+
 
   }, [search])
-  recipes.forEach(recipe => console.log('hello'))
 
 
   return (
@@ -49,11 +55,15 @@ function App() {
       <Container centerContent >
         <Input focusBorderColor='teal' bg={'white'} placeholder='what are you craving?' size={'md'} value={search} onChange={handleChange} />
         <p>{search}</p>
-        <ul>
+        <Container
+          py={4}
+          spacing={4}
+          justify={{ base: 'center', md: 'space-between' }}
+          align={{ base: 'center', md: 'center' }}>
           {filteredRecipes.map(recipe =>
-            <li>{recipe.name}</li>
+            <RecipeCard key={recipe.id} recipe={recipe} />
           )}
-        </ul>
+        </Container>
       </Container>
 
       <SmallWithNavigation />
