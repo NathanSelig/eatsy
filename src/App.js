@@ -1,12 +1,11 @@
 import React from 'react'
-import { Box, Container, Flex, Input, Stack } from '@chakra-ui/react'
+import { Box, Container, Wrap, Input, Spacer, WrapItem } from '@chakra-ui/react'
 import SmallWithNavigation from './component/footer'
 import Nav from './component/header'
 import Hero from './component/hero'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import RecipeCard from './component/recipeCard'
-
 
 
 function App() {
@@ -55,15 +54,15 @@ function App() {
       <Container centerContent >
         <Input focusBorderColor='teal' bg={'white'} placeholder='what are you craving?' size={'md'} value={search} onChange={handleChange} />
         <p>{search}</p>
-        <Container
-          py={4}
-          spacing={4}
-          justify={{ base: 'center', md: 'space-between' }}
-          align={{ base: 'center', md: 'center' }}>
+        <Wrap
+        margin={10}
+        >
           {filteredRecipes.map(recipe =>
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <WrapItem>
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            </WrapItem>
           )}
-        </Container>
+        </Wrap>
       </Container>
 
       <SmallWithNavigation />
