@@ -1,5 +1,5 @@
 import React from 'react'
-import { Box, Container, Wrap, Input, Spacer, WrapItem } from '@chakra-ui/react'
+import { Box, Container, SimpleGrid, Input, Spacer, WrapItem, Center } from '@chakra-ui/react'
 import SmallWithNavigation from './component/footer'
 import Nav from './component/header'
 import Hero from './component/hero'
@@ -54,15 +54,13 @@ function App() {
       <Container centerContent >
         <Input focusBorderColor='teal' bg={'white'} placeholder='what are you craving?' size={'md'} value={search} onChange={handleChange} />
         <p>{search}</p>
-        <Wrap
-        margin={10}
-        >
-          {filteredRecipes.map(recipe =>
-            <WrapItem>
+        <Center>
+          <SimpleGrid columns={[2, null, 3]} spacingX={400}>
+            {filteredRecipes.map(recipe =>
               <RecipeCard key={recipe.id} recipe={recipe} />
-            </WrapItem>
-          )}
-        </Wrap>
+            )}
+          </SimpleGrid>
+        </Center>
       </Container>
 
       <SmallWithNavigation />

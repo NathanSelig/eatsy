@@ -8,7 +8,7 @@ const RecipeCard = ({ recipe }) => {
     }
 
     return (
-        <Box p={5} shadow='md' maxW='sm' borderRadius='2xl' overflow='hidden'>
+        <Box p={5} width = '300px' shadow='md' maxW='sm' borderRadius='2xl' overflow='hidden'>
             <Text fontSize='2xl' as='b'>{recipe.name}</Text>
             <Image boxSize='250px' objectFit='cover' src={recipe.thumbnail_url}></Image>
         </Box>
