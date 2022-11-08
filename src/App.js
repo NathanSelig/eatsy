@@ -1,18 +1,19 @@
 import React from 'react'
-import { Box, Container, SimpleGrid, Input, Spacer, WrapItem, Center } from '@chakra-ui/react'
-import SmallWithNavigation from './component/footer'
+import { Container, SimpleGrid, Input, Center } from '@chakra-ui/react'
 import Nav from './component/header'
 import Hero from './component/hero'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
 import RecipeCard from './component/recipeCard'
+import Footer from './component/footer'
+import Similar from './component/similar'
 
 
 function App() {
   const options = {
     method: 'GET',
     url: 'https://tasty.p.rapidapi.com/recipes/list',
-    params: { from: '0', size: '20', tags: 'under_30_minutes' },
+    params: { from: '0', size: '100', tags: 'under_30_minutes' },
     headers: {
       'X-RapidAPI-Key': '13fc0b4621msh3fd308fbd57e499p13fee0jsnf9fc413a321c',
       'X-RapidAPI-Host': 'tasty.p.rapidapi.com'
@@ -44,6 +45,7 @@ function App() {
     console.log(filteredRecipes)
 
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [search])
 
 
@@ -54,16 +56,14 @@ function App() {
       <Container centerContent >
         <Input focusBorderColor='teal' bg={'white'} placeholder='what are you craving?' size={'md'} value={search} onChange={handleChange} />
         <p>{search}</p>
-        <Center>
-          <SimpleGrid columns={[2, null, 3]} spacingX={400}>
+          <SimpleGrid columns={[1, 2, 3]} spacingX={400}>
             {filteredRecipes.map(recipe =>
               <RecipeCard key={recipe.id} recipe={recipe} />
             )}
           </SimpleGrid>
-        </Center>
       </Container>
-
-      <SmallWithNavigation />
+      <Similar selected={filteredRecipes} allRecipes={recipes} />
+      <Footer />
     </div>
   )
 }

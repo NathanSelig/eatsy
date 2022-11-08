@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 
 
-export default function SmallWithNavigation() {
+export default function Footer() {
     return (
         <Box
             boxSize={'-moz-max-content'}
